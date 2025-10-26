@@ -12,17 +12,19 @@ ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : pose(pose)
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     std::unique_ptr<ICommand> cmder;
-    if (commands =="M") {
-        cmder = std::make_unique<MoveCommand>();
-    }
-    else if (commands == "L") {
-        cmder = std::make_unique<TurnLeftCommand>();
-    }
-    else if (commands == "R") {
-        cmder = std::make_unique<TurnRightCommand>();
-    }
-    if (cmder) {
-        cmder->DoOperate(*this);
+    for (const auto cmd : commands){
+        if (cmd == 'M') {
+            cmder = std::make_unique<MoveCommand>();
+        } else if (cmd == 'L') {
+            cmder = std::make_unique<TurnLeftCommand>();
+        } else if (cmd == 'R') {
+            cmder = std::make_unique<TurnRightCommand>();
+        } else if (cmd == 'F') {
+            cmder = std::make_unique<FastCommand>();
+        }
+        if (cmder) {
+            cmder->DoOperate(*this);
+        }
     }
 }
 Pose ExecutorImpl::Query() const noexcept
@@ -73,5 +75,13 @@ void ExecutorImpl::TurnRight() noexcept
     else if (pose.heading == 'N') {
         pose.heading = 'E';
     }
+}
+void ExecutorImpl::Fast() noexcept
+{
+    fast = !fast;
+}
+bool ExecutorImpl::IsFast() const noexcept
+{
+    return fast;
 }
 } 
