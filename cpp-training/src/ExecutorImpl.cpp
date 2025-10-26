@@ -24,7 +24,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             pose.y-=1;
         }
     }
-    else if (commands == 'L') {
+    else if (commands == "L") {
         if (pose.heading == 'E') {
             pose.heading = 'N';
         } 
@@ -38,7 +38,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             pose.heading = 'E';
         }
     }
-    else if (commands == 'R') {
+    else if (commands == "R") {
         if (pose.heading == 'E') {
             pose.heading = 'S';
         } 
