@@ -1,15 +1,11 @@
 #include <gtest/gtest.h>
 
 #include <memory>
-#include <tuple>
 
 #include "Executor.hpp"
+#include "PoseEq.hpp"
 namespace adas
 {
-bool operator==(const Pose& lhs, const Pose& rhs)
-{
-    return std::tie(lhs.x, lhs.y, lhs.heading) == std::tie(rhs.x, rhs.y, rhs.heading);
-}
 TEST(ExecutorTest, should_return_init_pose_when_without_command)
 {
     std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'E'}));
@@ -106,4 +102,5 @@ TEST(ExecutorTest, should_return_facing_E_given_command_is_R_and_facing_is_N)
     const Pose target({0, 0, 'E'});
     ASSERT_EQ(target, executor->Query());
 }
+
 }  // namespace adas
