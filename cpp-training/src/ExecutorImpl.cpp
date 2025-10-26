@@ -17,18 +17,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
         TurnLeft();
     }
     else if (commands == "R") {
-        if (pose.heading == 'E') {
-            pose.heading = 'S';
-        } 
-        else if (pose.heading == 'S') {
-            pose.heading = 'W';
-        } 
-        else if (pose.heading == 'W') {
-            pose.heading = 'N';
-        } 
-        else if (pose.heading == 'N') {
-            pose.heading = 'E';
-        }
+        TurnRight();
     }
 }
 Pose ExecutorImpl::Query() const noexcept
@@ -62,6 +51,21 @@ void ExecutorImpl::TurnLeft() noexcept
         pose.heading = 'S';
     } 
     else if (pose.heading == 'S') {
+        pose.heading = 'E';
+    }
+}
+void ExecutorImpl::TurnRight() noexcept
+{
+    if (pose.heading == 'E') {
+        pose.heading = 'S';
+    } 
+    else if (pose.heading == 'S') {
+        pose.heading = 'W';
+    } 
+    else if (pose.heading == 'W') {
+        pose.heading = 'N';
+    } 
+    else if (pose.heading == 'N') {
         pose.heading = 'E';
     }
 }
