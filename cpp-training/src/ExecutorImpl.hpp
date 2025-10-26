@@ -14,6 +14,7 @@ public:
     Pose Query(void) const noexcept override;
 private:
     void Move(void) noexcept;
+    void TurnLeft(void) noexcept;
     Pose pose;
 };
 } 
