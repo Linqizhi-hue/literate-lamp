@@ -172,25 +172,25 @@ TEST(ExecutorReverseTest,should_return_y_plus_1_and_facing_E_given_status_is_bac
     const Pose target{0, 1, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
-TEST(ExecutorReverseTest,should_return_x_plus_1_command_is_BBM_and_facing_is_E)
+TEST(ExecutorReverseTest,should_return_y_plus_1_command_is_BBM_and_facing_is_N)
 {
     std::unique_ptr<Executor> executor(Executor::NewExecutor());
     executor->Execute("BBM");
-    const Pose target{1, 0, 'E'};
+    const Pose target{0, 1, 'N'};
     ASSERT_EQ(target, executor->Query());
 }
-TEST(ExecutorReverseTest, should_return_facing_N_command_is_BBL_and_facing_is_E)
+TEST(ExecutorReverseTest, should_return_facing_W_command_is_BBL_and_facing_is_N)
 {
     std::unique_ptr<Executor> executor(Executor::NewExecutor());
     executor->Execute("BBL");
-    const Pose target{0, 0, 'N'};
+    const Pose target{0, 0, 'W'};
     ASSERT_EQ(target, executor->Query());
 }
-TEST(ExecutorReverseTest, should_return_facing_S_command_is_BBR_and_facing_is_E)
+TEST(ExecutorReverseTest, should_return_facing_E_command_is_BBR_and_facing_is_N)
 {
     std::unique_ptr<Executor> executor(Executor::NewExecutor());
     executor->Execute("BBR");
-    const Pose target{0, 0, 'S'};
+    const Pose target{0, 0, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
 }

@@ -17,10 +17,11 @@ ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : poseHandler(pose)
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     const std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap{
-        {'M', MoveCommand()},
-        {'L', TurnLeftCommand()},
+        {'M', MoveCommand()}, 
+        {'L', TurnLeftCommand()}, 
         {'R', TurnRightCommand()},
-        {'F', FastCommand()},
+        {'F', FastCommand()}, 
+        {'B', ReverseCommand()},
     };
     for (const auto cmd : commands){
         const auto it = cmderMap.find(cmd);
@@ -33,7 +34,7 @@ Pose ExecutorImpl::Query() const noexcept
 {
     return poseHandler.Query();
 }
-void ExecutorImpl::Move() noexcept
+void ExecutorImpl::Forward() noexcept
 {
     if (pose.heading == 'E') {
         ++pose.x;
@@ -78,6 +79,18 @@ void ExecutorImpl::TurnRight() noexcept
         pose.heading = 'E';
     }
 }
+void ExecutorImpl::Backward() noexcept
+{
+    if (pose.heading == 'E') {
+        --pose.x;
+    } else if (pose.heading == 'W') {
+        ++pose.x;
+    } else if (pose.heading == 'N') {
+        --pose.y;
+    } else if (pose.heading == 'S') {
+        ++pose.y;
+    }
+}
 void ExecutorImpl::Fast() noexcept
 {
     fast = !fast;
@@ -85,5 +98,13 @@ void ExecutorImpl::Fast() noexcept
 bool ExecutorImpl::IsFast() const noexcept
 {
     return fast;
+}
+void ExecutorImpl::Reverse() noexcept
+{
+    reverse = !reverse;
+}
+bool ExecutorImpl::IsReverse() const noexcept
+{
+    return reverse;
 }
 } 

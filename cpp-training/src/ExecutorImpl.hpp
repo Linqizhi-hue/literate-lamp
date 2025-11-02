@@ -15,13 +15,17 @@ public:
     void Execute(const std::string& command) noexcept override;
     Pose Query(void) const noexcept override;
 public:
-    void Move(void) noexcept;
+    void Forward(void) noexcept;
     void TurnLeft(void) noexcept;
     void TurnRight(void) noexcept;
+    void Backward(void) noexcept;
     void Fast(void) noexcept;
     bool IsFast(void) const noexcept;
+    void Reverse(void) noexcept;
+    bool IsReverse(void) const noexcept;
     Pose pose;
     bool fast{false};
+    bool reverse{false};
 private:
     PoseHandler poseHandler;
 private:
@@ -31,9 +35,17 @@ private:
         void operator()(PoseHandler& poseHandler) const noexcept
         {
             if (poseHandler.IsFast()) {
-                poseHandler.Move();
+                if (poseHandler.IsReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
             }
-            poseHandler.Move();
+            if (poseHandler.IsReverse()) {
+                poseHandler.Backward();
+            } else {
+                poseHandler.Forward();
+            }
         }
     };
     class TurnLeftCommand final
@@ -42,9 +54,17 @@ private:
         void operator()(PoseHandler& poseHandler) const noexcept
         {
             if (poseHandler.IsFast()) {
-                poseHandler.Move();
+                if (poseHandler.IsReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
             }
-            poseHandler.TurnLeft();
+            if (poseHandler.IsReverse()) {
+                poseHandler.TurnRight();
+            } else {
+                poseHandler.TurnLeft();
+            }
         }
     };
     class TurnRightCommand final
@@ -53,9 +73,17 @@ private:
         void operator()(PoseHandler& poseHandler) const noexcept
         {
             if (poseHandler.IsFast()) {
-                poseHandler.Move();
+                if (poseHandler.IsReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
             }
-            poseHandler.TurnRight();
+            if (poseHandler.IsReverse()) {
+                poseHandler.TurnLeft();
+            } else {
+                poseHandler.TurnRight();
+            }
         }
     };
     class FastCommand final
@@ -64,6 +92,14 @@ private:
         void operator()(PoseHandler& poseHandler) const noexcept
         {
             poseHandler.Fast();
+        }
+    };
+    class ReverseCommand final
+    {
+    public:
+        void operator()(PoseHandler& poseHandler) const noexcept
+        {
+            poseHandler.Reverse();
         }
     };
 };
