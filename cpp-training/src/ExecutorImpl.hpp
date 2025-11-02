@@ -12,7 +12,7 @@ public:
 public:
     void Execute(const std::string& command) noexcept override;
     Pose Query(void) const noexcept override;
-private:
+public:
     void Move(void) noexcept;
     void TurnLeft(void) noexcept;
     void TurnRight(void) noexcept;
